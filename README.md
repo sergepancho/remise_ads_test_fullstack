@@ -1,3 +1,10 @@
+# What is the branch for ?
+
+This branch have the implementation of all the task from task 1 to task 6 but it still just a prototype.
+
+Task 1 - 4 = implementation of endpoint ; Task 5 = implementation of jwt token ; Task 6 = unit test
+
+
 # Full-Stack Short test
 
 This test will evaluate your front-end and back-end skills.
