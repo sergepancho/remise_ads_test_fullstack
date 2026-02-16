@@ -1,10 +1,3 @@
-# What is the branch for ?
-
-This branch have the implementation of all the task from task 1 to task 6 but it still just a prototype.
-
-Task 1 - 4 = implementation of endpoint ; Task 5 = implementation of jwt token ; Task 6 = unit test
-
-
 # Full-Stack Short test
 
 This test will evaluate your front-end and back-end skills.
@@ -135,3 +128,94 @@ The process will depend on the language you choose for developing the back-end:
 ### Start the front-end
 
 Check the [Readme](./front-end/README.md)  in the front-end folder
+
+Here is your content rewritten in a clean, professional **README.md** format that you can directly paste into your project.
+
+---
+
+# 🚀 Prototype Implementation – Tasks 1 to 6
+
+This branch contains the implementation of **Tasks 1 through 6**.
+⚠️ Note: The project is currently a **prototype**.
+
+---
+
+## 📌 Implemented Tasks
+
+### ✅ Task 1 – 4: Endpoint Implementation
+
+* REST API endpoints implemented.
+* Basic request handling.
+* Controller and service logic structured.
+* Prototype-level validation and responses.
+
+### ✅ Task 5: JWT Authentication Implementation
+
+* JWT-based authentication mechanism implemented.
+* Secure login endpoint.
+* Protected routes require valid Bearer token.
+
+### ✅ Task 6: Unit Tests
+
+* Unit tests implemented.
+* Basic coverage for endpoints and authentication logic.
+
+---
+
+# 🔐 Task 5 – JWT Authentication Testing Guide
+
+Follow the steps below to test the JWT implementation.
+
+---
+
+## 🥇 Step 1 – Obtain a JWT Token
+
+Use the following command to log in and retrieve a JWT token:
+
+```bash
+curl -s -X POST http://localhost:8080/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{"username": "admin", "password": "admin123"}'
+```
+
+### ✔ Expected Result:
+
+You should receive a JSON response containing a token:
+
+```json
+{
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+}
+```
+
+Copy the value of the `"token"` field.
+
+---
+
+## 🥈 Step 2 – Call a Protected Endpoint
+
+Use the token obtained in Step 1 to access a protected endpoint:
+
+```bash
+curl -s http://localhost:8080/api/vehicle-makes \
+-H "Authorization: Bearer <TOKEN_FROM_STEP_1>"
+```
+
+Replace:
+
+```
+<TOKEN_FROM_STEP_1>
+```
+
+with the actual JWT token you received.
+
+---
+
+### ✔ Expected Result:
+
+If the token is valid, the protected endpoint should return the requested data.
+
+If the token is missing or invalid, you should receive an authentication error (e.g., 401 Unauthorized).
+
+---
+
