@@ -1,7 +1,3 @@
-# What this branch is for ?
-This branch just have the task 1 to task 4 implemented(implementation of api)
-Task 4 = I'm using a pessimist approach when toggling the box . I wait for the server answer before updating the ui
-
 # Full-Stack Short test
 
 This test will evaluate your front-end and back-end skills.
@@ -132,3 +128,186 @@ The process will depend on the language you choose for developing the back-end:
 ### Start the front-end
 
 Check the [Readme](./front-end/README.md)  in the front-end folder
+
+
+# Vehicle Coverage API – Implementation Overview
+
+## Architecture
+
+The application is built using:
+
+* **Python / Flask**
+* **3-layer architecture pattern**:
+
+  * **API Layer** → Handles HTTP requests and JWT protection
+  * **Service Layer** → Contains business logic
+  * **Repository Layer** → Handles database access via SQLAlchemy
+* **SQLAlchemy ORM**
+
+---
+
+# Task 1 — List Vehicle Models by Make
+
+### Endpoint
+
+```
+GET /vehicle-makes/<make_id>/models
+```
+
+### Description
+
+Returns the list of vehicle models associated with a given vehicle make.
+
+### Behavior
+
+* Receives a `make_id` as a URL parameter (e.g., `1` for the make_name `Acura`  )
+* Returns a list of models containing:
+
+  * `id`
+  * `name`
+* Filters only:
+
+  * Active vehicle makes (`state == 1`)
+  * Active vehicle models (`state == 1`)
+
+### Files Involved
+
+* `vehicle.py`
+
+  * API
+  * Service
+  * Repository
+* `entities.py`
+
+---
+
+# Task 2 — List All Available Vehicle Years
+
+### Endpoint
+
+```
+GET /vehicle-years
+```
+
+### Description
+
+Returns the distinct list of all vehicle years available in the `vehicle` table.
+
+### Behavior
+
+* Returns only distinct years
+* Sorted in **descending order**
+* Filters only active vehicles (`state == 1`)
+
+### Files Involved
+
+* `vehicle.py`
+
+  * API
+  * Service
+  * Repository
+
+---
+
+# Task 3 — Get Coverage Grid (Model/Year) by Make
+
+### Endpoint
+
+```
+GET /vehicle-makes/<make_id>/coverage
+```
+
+### Description
+
+Returns the coverage matrix (model/year grid) for a given vehicle make.
+
+### Response Format
+
+```json
+{
+  "ModelName1": [2020, 2021, 2022],
+  "ModelName2": [2019, 2020]
+}
+```
+
+### Purpose
+
+Allows the frontend to render a coverage grid:
+
+* 🟦 Blue cells → vehicle exists
+* ⬜ Grey cells → vehicle does not exist
+
+### Behavior
+
+* Filters only active vehicles (`state == 1`)
+
+### Files Involved
+
+* `vehicle.py`
+
+  * API
+  * Service
+  * Repository
+
+---
+
+# Task 4 — Toggle Vehicle Coverage (Activate / Deactivate)
+
+### Endpoint
+
+```
+POST /vehicle-makes/<make_id>/coverage/toggle
+```
+
+### Request Body
+
+```json
+{
+  "vehicle_model_id": <int>,
+  "vehicle_year": <int>
+}
+```
+
+### Behavior
+
+* If the vehicle exists:
+
+  * Toggle its `state` (0 → 1 or 1 → 0)
+  * Update the `updated` timestamp
+* If the vehicle does not exist:
+
+  * Create it with:
+
+    * `state = 1`
+    * `updated = current datetime`
+
+---
+
+## Database Migration
+
+File: `update_database.sql`
+
+Adds the following columns to:
+
+* `vehicle_make`
+* `vehicle_model`
+* `vehicle`
+
+### New Columns
+
+```sql
+state TINYINT DEFAULT 1
+updated DATETIME
+```
+
+---
+
+## SQLAlchemy Models Update
+
+The following fields were added to all three entities in `entities.py`:
+
+* `state` → Integer (default = 1)
+* `updated` → DateTime
+
+
+
