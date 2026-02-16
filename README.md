@@ -1,3 +1,7 @@
+# What this branch is for ?
+This branch just have the task 1 to task 4 implemented(implementation of api)
+Task 4 = I'm using a pessimist approach when toggling the box . I wait for the server answer before updating the ui
+
 # Full-Stack Short test
 
 This test will evaluate your front-end and back-end skills.
